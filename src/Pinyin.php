@@ -70,6 +70,7 @@ class Pinyin
      *
      * @param string|null $loader
      * @param string|null $path
+     * @throws Exception|InvalidArgumentException
      */
     public function __construct(?string $loader = null, ?string $path = null)
     {
