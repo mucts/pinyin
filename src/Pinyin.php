@@ -13,6 +13,7 @@
 namespace MuCTS\Pinyin;
 
 
+use Exception;
 use MuCTS\Pinyin\Exceptions\InvalidArgumentException;
 use MuCTS\Pinyin\Interfaces\DictLoader;
 use MuCTS\Pinyin\Loaders\File;
@@ -192,6 +193,7 @@ class Pinyin
      * @param DictLoader|string|null $loader
      *
      * @return $this
+     * @throws Exception|InvalidArgumentException
      */
     public function setLoader($loader = null)
     {
@@ -203,16 +205,14 @@ class Pinyin
             $this->loader = $loader;
             return $this;
         }
-        if (is_string($loader)) {
-            if (class_exists($loader) && in_array(DictLoader::class, class_implements($loader))) {
-                $this->loader = $loader;
-                return $this;
-            }
-            $loader = __NAMESPACE__ . '\\Loaders\\' . Str::studly($loader);
-            if (class_exists($loader) && in_array(DictLoader::class, class_implements($loader))) {
-                $this->loader = $loader;
-                return $this;
-            }
+        if (class_exists($loader) && in_array(DictLoader::class, class_implements($loader))) {
+            $this->loader = $loader;
+            return $this;
+        }
+        $loader = __NAMESPACE__ . '\\Loaders\\' . Str::studly($loader);
+        if (class_exists($loader) && in_array(DictLoader::class, class_implements($loader))) {
+            $this->loader = $loader;
+            return $this;
         }
         throw new InvalidArgumentException('This\'s not valid dict loader class.');
     }
