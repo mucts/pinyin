@@ -20,7 +20,6 @@ use MuCTS\Pinyin\Loaders\File;
 use MuCTS\Pinyin\Loaders\GeneratorFile;
 use MuCTS\Pinyin\Loaders\MemoryFile;
 use MuCTS\Support\Arr;
-use MuCTS\Support\Str;
 
 class Pinyin
 {
