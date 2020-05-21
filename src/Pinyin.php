@@ -17,6 +17,9 @@ use Exception;
 use MuCTS\Pinyin\Exceptions\InvalidArgumentException;
 use MuCTS\Pinyin\Interfaces\DictLoader;
 use MuCTS\Pinyin\Loaders\File;
+use MuCTS\Pinyin\Loaders\GeneratorFile;
+use MuCTS\Pinyin\Loaders\MemoryFile;
+use MuCTS\Support\Arr;
 use MuCTS\Support\Str;
 
 class Pinyin
@@ -46,6 +49,12 @@ class Pinyin
     private $loader;
     /** @var string */
     private string $dataPath;
+    /** @var string[] */
+    protected array $alias = [
+        'file' => File::class,
+        'generator' => GeneratorFile::class,
+        'memory' => MemoryFile::class
+    ];
 
     /**
      * Punctuations map.
@@ -189,6 +198,17 @@ class Pinyin
     }
 
     /**
+     * Determine if it's an alias
+     *
+     * @param string $name
+     * @return bool
+     */
+    protected function isAlias(string $name): bool
+    {
+        return Arr::exists($this->alias, $name);
+    }
+
+    /**
      * Loader setter.
      *
      * @param DictLoader|string|null $loader
@@ -206,11 +226,10 @@ class Pinyin
             $this->loader = $loader;
             return $this;
         }
-        if (class_exists($loader) && in_array(DictLoader::class, class_implements($loader))) {
-            $this->loader = $loader;
+        if ($this->isAlias($loader)) {
+            $this->loader = Arr::get($this->alias, $loader);
             return $this;
         }
-        $loader = __NAMESPACE__ . '\\Loaders\\' . Str::studly($loader);
         if (class_exists($loader) && in_array(DictLoader::class, class_implements($loader))) {
             $this->loader = $loader;
             return $this;
