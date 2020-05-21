@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="mucts/pinyin Test Suite (All PHP version)">
+            <directory>./tests/</directory>
+            <exclude>./tests/GeneratorFileTest.php</exclude>
+        </testsuite>
+        <testsuite name="mucts/pinyin GeneratorFileTest Test Suite">
+            <file>./tests/PinyinTestCase.php</file>
+            <file phpVersion="7.4.0" phpVersionOperator=">=">./tests/GeneratorFileTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
