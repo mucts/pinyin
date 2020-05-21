@@ -375,7 +375,7 @@ class Pinyin
         }
 
         if ($this->hasOption($option, self::KEEP_PUNCTUATION)) {
-            $punctuations = array_merge($this->punctuations, ["\t" => ' ', '  ' => ' ']);
+            $punctuations = array_merge($this->punctuations, ['  ' => ' ']);
             $string = trim(str_replace(array_keys($punctuations), $punctuations, $string));
 
             array_push($regex, preg_quote(implode(array_merge(array_keys($this->punctuations), $this->punctuations)), '~'));
