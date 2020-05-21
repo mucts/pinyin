@@ -12,8 +12,6 @@
 
 namespace MuCTS\Pinyin\Exceptions;
 
-
 class InvalidArgumentException extends \InvalidArgumentException
 {
-
 }

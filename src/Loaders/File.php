@@ -12,7 +12,6 @@
 
 namespace MuCTS\Pinyin\Loaders;
 
-
 use Closure;
 use MuCTS\Pinyin\Interfaces\DictLoader;
 
@@ -50,10 +49,10 @@ class File implements DictLoader
     public function map(Closure $callback)
     {
         for ($i = 0; $i < 100; ++$i) {
-            $segment = $this->path.'/'.sprintf($this->segmentName, $i);
+            $segment = $this->path . '/' . sprintf($this->segmentName, $i);
 
             if (file_exists($segment)) {
-                $dictionary = (array) include $segment;
+                $dictionary = (array)include $segment;
                 $callback($dictionary);
             }
         }
@@ -66,10 +65,10 @@ class File implements DictLoader
      */
     public function mapSurname(Closure $callback)
     {
-        $surnames = $this->path.'/surnames';
+        $surnames = $this->path . '/surnames';
 
         if (file_exists($surnames)) {
-            $dictionary = (array) include $surnames;
+            $dictionary = (array)include $surnames;
             $callback($dictionary);
         }
     }

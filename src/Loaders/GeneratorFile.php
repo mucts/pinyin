@@ -12,7 +12,6 @@
 
 namespace MuCTS\Pinyin\Loaders;
 
-
 use Closure;
 use Generator;
 use MuCTS\Pinyin\Interfaces\DictLoader;

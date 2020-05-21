@@ -12,7 +12,6 @@
 
 namespace MuCTS\Pinyin\Interfaces;
 
-
 use Closure;
 
 interface DictLoader

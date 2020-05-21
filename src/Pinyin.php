@@ -12,7 +12,6 @@
 
 namespace MuCTS\Pinyin;
 
-
 use Exception;
 use MuCTS\Pinyin\Exceptions\InvalidArgumentException;
 use MuCTS\Pinyin\Interfaces\DictLoader;
