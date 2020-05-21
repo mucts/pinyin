@@ -8,6 +8,11 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
+    <filter>
+        <whitelist  processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
     <testsuites>
         <testsuite name="mucts/pinyin Test Suite (All PHP version)">
             <directory>./tests/</directory>
