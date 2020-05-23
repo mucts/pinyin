@@ -1,16 +1,16 @@
+<p align="center"><img src="https://images.mucts.com/image/mcts.png" width="400"></p>
+<p align="center">
+    <a href="https://scrutinizer-ci.com/g/mucts/pinyin"><img src="https://scrutinizer-ci.com/g/mucts/pinyin/badges/build.png" alt="Build Status"></a>
+    <a href="https://scrutinizer-ci.com/g/mucts/pinyin"><img src="https://scrutinizer-ci.com/g/mucts/pinyin/badges/code-intelligence.svg" alt="Code Intelligence Status"></a>
+    <a href="https://scrutinizer-ci.com/g/mucts/pinyin"><img src="https://scrutinizer-ci.com/g/mucts/pinyin/badges/quality-score.png" alt="Scrutinizer Code Quality"></a>
+    <a href="https://packagist.org/packages/mucts/pinyin"><img src="https://poser.pugx.org/mucts/pinyin/d/total.svg" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/mucts/pinyin"><img src="https://poser.pugx.org/mucts/pinyin/v/stable.svg" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/mucts/pinyin"><img src="https://poser.pugx.org/mucts/pinyin/license.svg" alt="License"></a>
+</p>
+
 # Pinyin
 
-
 > 基于 [CC-CEDICT](http://cc-cedict.org/wiki/) 词典的中文转拼音工具，更准确的支持多音字的汉字转拼音解决方案。
-
-[![Build Status](https://scrutinizer-ci.com/g/mucts/pinyin/badges/build.png)](https://scrutinizer-ci.com/g/mucts/pinyin)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/mucts/pinyin/badges/code-intelligence.svg)](https://scrutinizer-ci.com/g/mucts/pinyin)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mucts/pinyin/badges/quality-score.png)](https://scrutinizer-ci.com/g/mucts/pinyin)
-[![Latest Stable Version](https://poser.pugx.org/mucts/pinyin/v/stable.svg)](https://packagist.org/packages/mucts/pinyin) 
-[![Total Downloads](https://poser.pugx.org/mucts/pinyin/downloads.svg)](https://packagist.org/packages/mucts/pinyin) 
-[![Latest Unstable Version](https://poser.pugx.org/mucts/pinyin/v/unstable.svg)](https://packagist.org/packages/mucts/pinyin) 
-[![License](https://poser.pugx.org/mucts/pinyin/license.svg)](https://packagist.org/packages/mucts/pinyin)
-
 
 ## 安装
 
