@@ -1,4 +1,4 @@
-<p align="center"><img src="https://images.mucts.com/image/mcts.png" width="400"></p>
+<p align="center"><img src="https://images.mucts.com/image/exp_def_white.png" width="400"></p>
 <p align="center">
     <a href="https://scrutinizer-ci.com/g/mucts/pinyin"><img src="https://scrutinizer-ci.com/g/mucts/pinyin/badges/build.png" alt="Build Status"></a>
     <a href="https://scrutinizer-ci.com/g/mucts/pinyin"><img src="https://scrutinizer-ci.com/g/mucts/pinyin/badges/code-intelligence.svg" alt="Code Intelligence Status"></a>
