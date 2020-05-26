@@ -14,6 +14,7 @@ namespace MuCTS\Pinyin\Loaders;
 
 use Closure;
 use Generator;
+use MuCTS\Pinyin\Exceptions\PinyinException;
 use MuCTS\Pinyin\Interfaces\DictLoader;
 use SplFileObject;
 
@@ -44,10 +45,14 @@ class GeneratorFile implements DictLoader
      * Constructor.
      *
      * @param string $path
+     * @throws PinyinException
      */
     public function __construct($path)
     {
         $segments = glob($path . '/' . $this->segmentName);
+        if ($segments == false) {
+            throw new PinyinException('CC-CEDICT dictionary data does not exist');
+        }
         while (($segment = array_shift($segments))) {
             array_push(static::$handles, $this->openFile($segment));
         }

@@ -13,7 +13,9 @@
 namespace MuCTS\Pinyin\Loaders;
 
 use Closure;
+use MuCTS\Pinyin\Exceptions\PinyinException;
 use MuCTS\Pinyin\Interfaces\DictLoader;
+use MuCTS\Support\Arr;
 
 class File implements DictLoader
 {
@@ -45,12 +47,16 @@ class File implements DictLoader
      * Load dict.
      *
      * @param Closure $callback
+     * @throws PinyinException
      */
     public function map(Closure $callback)
     {
         $segments = glob($this->path . '/' . $this->segmentName);
+        if ($segments == false) {
+            throw new PinyinException('CC-CEDICT dictionary data does not exist');
+        }
         while (($segment = array_shift($segments))) {
-            $dictionary = (array)include $segment;
+            $dictionary = Arr::wrap(include $segment);
             $callback($dictionary);
         }
     }
@@ -65,7 +71,7 @@ class File implements DictLoader
         $surnames = $this->path . '/surnames';
 
         if (file_exists($surnames)) {
-            $dictionary = (array)include $surnames;
+            $dictionary = Arr::wrap(include $surnames);
             $callback($dictionary);
         }
     }

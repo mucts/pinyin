@@ -46,7 +46,7 @@ class Pinyin
      */
     private $loader;
     /** @var string */
-    private string $dataPath;
+    private string $path;
     /** @var string[] */
     protected array $alias = [
         'file' => File::class,
@@ -82,7 +82,7 @@ class Pinyin
     public function __construct(?string $loader = null, ?string $path = null)
     {
         $this->setLoader($loader);
-        $this->setDataPath($path);
+        $this->setPath($path);
     }
 
     /**
@@ -244,7 +244,7 @@ class Pinyin
     {
         if (!($this->loader instanceof DictLoader)) {
             $loaderName = $this->loader;
-            $this->loader = new $loaderName($this->dataPath);
+            $this->loader = new $loaderName($this->path);
         }
 
         return $this->loader;
@@ -256,13 +256,13 @@ class Pinyin
      * @param string|null $path
      * @return $this
      */
-    public function setDataPath(?string $path): self
+    public function setPath(?string $path): self
     {
         $path = $path ?? dirname(__DIR__) . '/data/';
         if (!is_dir($path)) {
             throw new InvalidArgumentException(sprintf('\'%s\' is not valid data path.', $path));
         }
-        $this->dataPath = $path;
+        $this->path = $path;
         return $this;
     }
 

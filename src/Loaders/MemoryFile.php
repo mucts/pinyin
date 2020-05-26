@@ -13,7 +13,9 @@
 namespace MuCTS\Pinyin\Loaders;
 
 use Closure;
+use MuCTS\Pinyin\Exceptions\PinyinException;
 use MuCTS\Pinyin\Interfaces\DictLoader;
+use MuCTS\Support\Arr;
 
 class MemoryFile implements DictLoader
 {
@@ -43,16 +45,20 @@ class MemoryFile implements DictLoader
      * Constructor.
      *
      * @param string $path
+     * @throws PinyinException
      */
     public function __construct($path)
     {
         $segments = glob($path . '/' . $this->segmentName);
+        if ($segments == false) {
+            throw new PinyinException('CC-CEDICT dictionary data does not exist');
+        }
         while (($segment = array_shift($segments))) {
-            $this->segments[] = (array)include $segment;
+            $this->segments[] = Arr::wrap(include $segment);
         }
         $surnames = $path . '/surnames';
         if (file_exists($surnames)) {
-            $this->surnames = (array)include $surnames;
+            $this->surnames = Arr::wrap(include $surnames);
         }
     }
 
