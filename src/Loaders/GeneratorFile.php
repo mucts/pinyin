@@ -20,18 +20,11 @@ use SplFileObject;
 class GeneratorFile implements DictLoader
 {
     /**
-     * Data directory.
-     *
-     * @var string
-     */
-    protected string $path;
-
-    /**
      * Words segment name.
      *
      * @var string
      */
-    protected string $segmentName = 'words_%s';
+    protected string $segmentName = 'words_*';
 
     /**
      * SplFileObjects.
@@ -54,15 +47,11 @@ class GeneratorFile implements DictLoader
      */
     public function __construct($path)
     {
-        $this->path = $path;
-
-        for ($i = 0; $i < 100; ++$i) {
-            $segment = $this->path . '/' . sprintf($this->segmentName, $i);
-
-            if (file_exists($segment) && is_file($segment)) {
-                array_push(static::$handles, $this->openFile($segment));
-            }
+        $segments = glob($path . '/' . $this->segmentName);
+        while (($segment = array_shift($segments))) {
+            array_push(static::$handles, $this->openFile($segment));
         }
+        static::$surnamesHandle = $this->openFile($path . '/surnames');
     }
 
     /**
@@ -135,10 +124,6 @@ class GeneratorFile implements DictLoader
      */
     public function mapSurname(Closure $callback)
     {
-        if (!static::$surnamesHandle instanceof SplFileObject) {
-            static::$surnamesHandle = $this->openFile($this->path . '/surnames');
-        }
-
         $this->traversing($this->getGenerator([static::$surnamesHandle]), $callback);
     }
 }

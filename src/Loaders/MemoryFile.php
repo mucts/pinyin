@@ -19,18 +19,11 @@ class MemoryFile implements DictLoader
 {
 
     /**
-     * Data directory.
-     *
-     * @var string
-     */
-    protected string $path;
-
-    /**
      * Words segment name.
      *
      * @var string
      */
-    protected string $segmentName = 'words_%s';
+    protected string $segmentName = 'words_*';
 
     /**
      * Segment files.
@@ -53,14 +46,13 @@ class MemoryFile implements DictLoader
      */
     public function __construct($path)
     {
-        $this->path = $path;
-
-        for ($i = 0; $i < 100; ++$i) {
-            $segment = $path . '/' . sprintf($this->segmentName, $i);
-
-            if (file_exists($segment)) {
-                $this->segments[] = (array)include $segment;
-            }
+        $segments = glob($path . '/' . $this->segmentName);
+        while (($segment = array_shift($segments))) {
+            $this->segments[] = (array)include $segment;
+        }
+        $surnames = $path . '/surnames';
+        if (file_exists($surnames)) {
+            $this->surnames = (array)include $surnames;
         }
     }
 
@@ -83,14 +75,6 @@ class MemoryFile implements DictLoader
      */
     public function mapSurname(Closure $callback)
     {
-        if (empty($this->surnames)) {
-            $surnames = $this->path . '/surnames';
-
-            if (file_exists($surnames)) {
-                $this->surnames = (array)include $surnames;
-            }
-        }
-
         $callback($this->surnames);
     }
 }

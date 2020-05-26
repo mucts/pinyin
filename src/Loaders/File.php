@@ -22,7 +22,7 @@ class File implements DictLoader
      *
      * @var string
      */
-    protected string $segmentName = 'words_%s';
+    protected string $segmentName = 'words_*';
 
     /**
      * Dict path.
@@ -48,13 +48,10 @@ class File implements DictLoader
      */
     public function map(Closure $callback)
     {
-        for ($i = 0; $i < 100; ++$i) {
-            $segment = $this->path . '/' . sprintf($this->segmentName, $i);
-
-            if (file_exists($segment)) {
-                $dictionary = (array)include $segment;
-                $callback($dictionary);
-            }
+        $segments = glob($this->path . '/' . $this->segmentName);
+        while (($segment = array_shift($segments))) {
+            $dictionary = (array)include $segment;
+            $callback($dictionary);
         }
     }
 
