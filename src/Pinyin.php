@@ -81,8 +81,8 @@ class Pinyin
      */
     public function __construct(?string $loader = null, ?string $path = null)
     {
-        static::setLoader($loader);
-        static::setPath($path);
+        $this->setLoader($loader);
+        $this->setPath($path);
     }
 
     /**
@@ -95,9 +95,9 @@ class Pinyin
      */
     public function convert(string $string, int $option = self::DEFAULT): array
     {
-        $pinyin = static::romanize($string, $option);
+        $pinyin = $this->romanize($string, $option);
 
-        return static::splitWords($pinyin, $option);
+        return $this->splitWords($pinyin, $option);
     }
 
     /**
@@ -112,9 +112,9 @@ class Pinyin
     {
         $option = $option | self::NAME;
 
-        $pinyin = static::romanize($string, $option);
+        $pinyin = $this->romanize($string, $option);
 
-        return static::splitWords($pinyin, $option);
+        return $this->splitWords($pinyin, $option);
     }
 
     /**
@@ -136,7 +136,7 @@ class Pinyin
             throw new InvalidArgumentException("Delimiter must be one of: '_', '-', '', '.'.");
         }
 
-        return implode($delimiter, static::convert($string, $option | self::KEEP_NUMBER | self::KEEP_ENGLISH));
+        return implode($delimiter, $this->convert($string, $option | self::KEEP_NUMBER | self::KEEP_ENGLISH));
     }
 
     /**
@@ -156,7 +156,7 @@ class Pinyin
 
         return implode($delimiter, array_map(function ($pinyin) {
             return is_numeric($pinyin) ? $pinyin : mb_substr($pinyin, 0, 1);
-        }, static::convert($string, $option)));
+        }, $this->convert($string, $option)));
     }
 
     /**
@@ -174,7 +174,7 @@ class Pinyin
             list($option, $delimiter) = [$delimiter, ' '];
         }
 
-        return implode($delimiter, static::convert($string, $option));
+        return implode($delimiter, $this->convert($string, $option));
     }
 
     /**
@@ -192,7 +192,7 @@ class Pinyin
             list($option, $delimiter) = [$delimiter, ' '];
         }
 
-        return implode($delimiter, static::convert($string, $option | self::KEEP_PUNCTUATION | self::KEEP_ENGLISH | self::KEEP_NUMBER));
+        return implode($delimiter, $this->convert($string, $option | self::KEEP_PUNCTUATION | self::KEEP_ENGLISH | self::KEEP_NUMBER));
     }
 
     /**
@@ -276,12 +276,12 @@ class Pinyin
      */
     protected function romanize(string $string, int $option = self::DEFAULT): string
     {
-        $string = static::prepare($string, $option);
+        $string = $this->prepare($string, $option);
 
-        $dictLoader = static::getLoader();
+        $dictLoader = $this->getLoader();
 
-        if (static::hasOption($option, self::NAME)) {
-            $string = static::convertSurname($string, $dictLoader);
+        if ($this->hasOption($option, self::NAME)) {
+            $string = $this->convertSurname($string, $dictLoader);
         }
 
         $dictLoader->map(function ($dictionary) use (&$string) {
@@ -330,9 +330,9 @@ class Pinyin
         }
         $split = array_filter($split);
 
-        if (!static::hasOption($option, self::TONE)) {
+        if (!$this->hasOption($option, self::TONE)) {
             foreach ($split as $index => $pinyin) {
-                $split[$index] = static::formatTone($pinyin, $option);
+                $split[$index] = $this->formatTone($pinyin, $option);
             }
         }
 
@@ -366,15 +366,15 @@ class Pinyin
 
         $regex = ['\p{Han}', '\p{Z}', '\p{M}', "\t"];
 
-        if (static::hasOption($option, self::KEEP_NUMBER)) {
+        if ($this->hasOption($option, self::KEEP_NUMBER)) {
             array_push($regex, '0-9');
         }
 
-        if (static::hasOption($option, self::KEEP_ENGLISH)) {
+        if ($this->hasOption($option, self::KEEP_ENGLISH)) {
             array_push($regex, 'a-zA-Z');
         }
 
-        if (static::hasOption($option, self::KEEP_PUNCTUATION)) {
+        if ($this->hasOption($option, self::KEEP_PUNCTUATION)) {
             $punctuations = array_merge($this->punctuations, ['  ' => ' ']);
             $string = trim(str_replace(array_keys($punctuations), $punctuations, $string));
 
@@ -406,11 +406,11 @@ class Pinyin
             if (false !== strpos($pinyin, $unicode)) {
                 $umlaut = $replacement[0];
 
-                if (static::hasOption($option, self::UMLAUT_V) && 'yu' == $umlaut) {
+                if ($this->hasOption($option, self::UMLAUT_V) && 'yu' == $umlaut) {
                     $umlaut = 'v';
                 }
 
-                $pinyin = str_replace($unicode, $umlaut, $pinyin) . (static::hasOption($option, self::ASCII_TONE) ? $replacement[1] : '');
+                $pinyin = str_replace($unicode, $umlaut, $pinyin) . ($this->hasOption($option, self::ASCII_TONE) ? $replacement[1] : '');
             }
         }
 
